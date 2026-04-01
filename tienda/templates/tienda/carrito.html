@@ -1,0 +1,57 @@
+{% extends 'tienda/base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Tu Carrito de Compras</h2>
+
+{% if request.session.carrito.items %}
+<div class="table-responsive">
+    <table class="table table-bordered align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th class="text-center">Cantidad</th>
+                <th>Subtotal</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, value in request.session.carrito.items %}
+            <tr>
+                <td>{{ value.nombre }}</td>
+                <td>${{ value.precio }}</td>
+                <td class="text-center">
+                    <a href="{% url 'restar' value.producto_id %}" class="btn btn-sm btn-outline-secondary">-</a>
+                    <span class="mx-2">{{ value.cantidad }}</span>
+                    <a href="{% url 'agregar' value.producto_id %}" class="btn btn-sm btn-outline-secondary">+</a>
+                </td>
+                <td>
+                    ${% widthratio value.precio 1 value.cantidad %}
+                </td>
+                <td>
+                    <a href="{% url 'eliminar' value.producto_id %}" class="btn btn-sm btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mt-4">
+    <a href="{% url 'limpiar' %}" class="btn btn-outline-danger">Vaciar Carrito</a>
+    <div class="text-end">
+        <h4>Total a Pagar</h4>
+        <a href="{% url 'confirmar_compra' %}" class="btn btn-success btn-lg mt-2">Confirmar Compra</a>
+        {% if not user.is_authenticated %}
+            <div class="form-text text-danger mt-1">Debes iniciar sesión para confirmar.</div>
+        {% endif %}
+    </div>
+</div>
+
+{% else %}
+<div class="alert alert-warning text-center">
+    Tu carrito está vacío. <br><br>
+    <a href="{% url 'catalogo' %}" class="btn btn-primary">Volver al catálogo</a>
+</div>
+{% endif %}
+{% endblock %}

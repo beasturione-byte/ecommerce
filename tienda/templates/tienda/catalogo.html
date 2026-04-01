@@ -1,0 +1,31 @@
+{% extends 'tienda/base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Catálogo de Productos</h2>
+<div class="row">
+    {% for producto in productos %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            {% if producto.imagen_url %}
+                <img src="{{ producto.imagen_url }}" class="card-img-top" alt="{{ producto.nombre }}" style="height: 200px; object-fit: cover;">
+            {% else %}
+                <div class="bg-secondary text-white d-flex justify-content-center align-items-center" style="height: 200px;">
+                    <span>Sin imagen</span>
+                </div>
+            {% endif %}
+            
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ producto.nombre }}</h5>
+                <p class="card-text text-truncate">{{ producto.descripcion }}</p>
+                <h4 class="text-success mt-auto">${{ producto.precio }}</h4>
+                <a href="{% url 'agregar' producto.id %}" class="btn btn-primary mt-3 w-100">Agregar al Carrito</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info">Aún no hay productos en la tienda. Ingresa al Admin Panel para crearlos.</div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
