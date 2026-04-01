@@ -18,5 +18,5 @@ Este proyecto es una plataforma de e-commerce desarrollada con Django, diseñada
 1. **Clonar el repositorio o descomprimir el proyecto:**
    ```bash
    # Si usas GitHub:
-   git clone [ENLACE_A_TU_REPOSITORIO_AQUI]
+   git clone [[ENLACE_A_TU_REPOSITORIO_AQUI]](https://github.com/beasturione-byte/ecommerce)
    cd [NOMBRE_DE_LA_CARPETA]
